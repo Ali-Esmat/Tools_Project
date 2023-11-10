@@ -1,0 +1,194 @@
+Databases Tables:
+    1- Users:
+        - user_id (unique, not null, int, auto-increment)
+        - email (the user name) (string, not_null)
+        - password (string, not null)
+        - user_type (string, not null)
+
+    2- Doctor_Slots:
+        - slot_id (int) PK
+        - date (date, not null)
+        - start_hour (string, not null)
+        - doctor_id (user_id and type = doctor) FK
+        - status (reserved/avaliable)
+
+    3- Appointments
+        - appointment_id PK
+        - slot_id FK, Unique
+        - patient_id (user_id and type = patient) FK,PK
+
+Relations between tables:
+    1- One Doctor has many Doctor_Slots [0..*] (Doctor has zero to many Doctor_Slots)
+    2- One Patient has many Appointments[0..*] (Patient has zero to many Appointments)
+    3- One Doctor_Slot MUST have 1 and only 1 doctor [1]
+    4- One Appointment MUST have 1 and only 1 patient [1]
+    5- One Appointment MUST have 1 and only 1 Doctor_Slots [1]
+
+    example:
+
+    Users
+    user_id     user_name   password    user_type
+        1       doctor      abc         DOCTOR
+        2       patient     abc         PATIENT
+
+    Doctor_Slots
+    slot_id (PK)     date        start_hour      doctor_id (FK)       status
+        1           11/9/2023       05:00           1                  RESERVED
+
+
+    Apointments
+    appointment_id (PK)      slot_id (FK,Unique)    patient_id (FK)
+            1                   1                2
+
+
+    On appointments:
+        fk constriants:
+            1- patients_id_cascade
+            2- slots_id_cascade
+    On Doctor_Slots:
+        fk constraints:
+            1- doctors_id_cascade
+
+
+Script:
+-- Tables Creation
+/*
+CREATE TABLE Users (
+	user_id SERIAL PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	user_type VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Doctor_Slots (
+	slot_id SERIAL PRIMARY KEY,
+    slot_date DATE NOT NULL,
+    start_hour TIME NOT NULL,
+	doctor_id INT NOT NULL,
+	status VARCHAR(255) NOT NULL,
+	CONSTRAINT doctors_id_cascade FOREIGN KEY (doctor_id) REFERENCES Users ON DELETE CASCADE
+);
+
+CREATE TABLE Appointments(
+	appointment_id SERIAL PRIMARY KEY,
+	slot_id INT NOT NULL,
+    patient_id INT NOT NULL,
+	CONSTRAINT slot_id_cascade FOREIGN KEY (slot_id) REFERENCES Doctor_Slots ON DELETE CASCADE,
+	CONSTRAINT patient_id_cascade FOREIGN KEY (patient_id) REFERENCES Users  ON DELETE CASCADE
+);
+*/
+
+-- INSERTS
+-- INSERT INTO Users (user_name, password, user_type) VALUES ('DR. Mohamed', 'ABC', 'Doctor');
+-- INSERT INTO Users (user_name, password, user_type) VALUES ('Khaled', 'ABC', 'Patient');
+-- INSERT INTO Doctor_Slots (slot_date, start_hour, doctor_id, status) VALUES ('2023/11/9', '14:00', 1, 'Reserved');
+-- INSERT INTO Appointments (slot_id, patient_id) VALUES (1,2);
+
+-- DROPS
+-- Drop TABLE Appointments;
+-- Drop TABLE Doctor_Slots;
+-- Drop TABLE Users;
+-- Alter TABLE Appointments drop constraint slot_id_cascade;
+-- Alter TABLE Appointments drop constraint patient_id_cascade;
+-- Alter TABLE Doctor_Slots drop constraint doctors_id_cascade_slots;
+
+-- SELECTION QUIERIES
+-- select * from Users;
+-- select * from Doctor_Slots;
+-- select * from appointments;
+
+-- DELETION QUIERIES
+-- DELETE from Users;
+-- DELETE from Doctor_Slots;
+-- DELETE from appointments;
+
+-- Constraint Creation
+/*
+alter table Appointments
+add constraint patients_id_cascade
+   foreign key (patient_id)
+   references Users
+   on delete cascade;
+
+alter table Appointments
+add constraint slot_id_cascade
+	foreign key (slot_id)
+	references Doctor_Slots
+	on delete cascade;
+
+alter table Doctor_Slots
+add constraint doctors_id_cascade_slots
+	foreign key (doctor_id)
+	references Users
+	on delete cascade;
+*/
+
+
+/*select doctors.user_name as Doctor_Name,
+	D.slot_date As Appointment_date,
+	D.start_hour As Appointment_time,
+	patient.user_name As Patient_Name
+	from Users As doctors
+INNER JOIN  Doctor_Slots AS D ON doctors.user_id = D.doctor_id
+INNER JOIN Appointments AS A ON D.slot_id = A.slot_id
+INNER JOIN Users As patient ON A.patient_id = patient.user_id ;*/
+
+/*
+SELECT setval(pg_get_serial_sequence('Users', 'user_id')
+            , COALESCE(max(user_id) + 1, 1)
+            , false)
+FROM   Users;
+
+SELECT setval(pg_get_serial_sequence('Doctor_Slots', 'slot_id')
+            , COALESCE(max(slot_id) + 1, 1)
+            , false)
+FROM   Doctor_slots;
+*/
+
+UnWanted scenarios:
+    1- A patient having an appointment with 2 doctors in the same slot. (patient && slot must be unique)
+    2- Two different patients have an appointment with the same doctor in the same slot (doctor && slot must be unique)
+
+Database will see these rows as unique if the composite primary key consisted of the 3 columns
+
+    - assume that patient 1 goes with dr 1 in both slots and patient 2 goes with dr 2 in both slots
+    Slot        Doctor        Patient
+     1           doctor_1       patient_1
+     1           doctor_1       patient_2 (UnWanted)
+     1           doctor_2       patient_1 (UnWanted)
+     1           doctor_2       patient_2
+     2           doctor_1       patient_1
+     2           doctor_1       patient_2 (Unwanted)
+     2           doctor_2       patient_1 (Unwanted)
+     2           doctor_2       patient_2
+    Vs
+    - if the dr and the slots are the composite key this becomes valid
+    Slot        Doctor        Patient
+     1           doctor_1       patient_1
+     1           doctor_2       patient_1
+     2           doctor_1       patient_1
+     2           doctor_2       patient_1
+
+    - if the patient and the dr
+    Slot        Doctor        Patient
+     1           doctor_1       patient_1
+     1           doctor_1       patient_2
+     1           doctor_2       patient_1
+     1           doctor_2       patient_2
+
+A point to be thought about":
+    - Each indiviual slot is unique with the slot id if even they have time collisons example:
+        - Slot 1: 11/9/2023 at 4 pm
+        - Slot 2: 11/9/2023 at 4 pm
+    - by setting the hour column to unique there can never be two slots at the same time.
+    - The handling of whether or not the slot times can be unique and the consequences should delegated to the controller on insertion of a slot.
+    - Contorller shouldn't accept a slot that has same time,date and doctor/patient as a different slot.
+        1- Patient tries to reserve an appointment with doctor in a time slot that collides with another one of his own appointments (appointment is at the same time)
+        2- Doctor tries to make to slots avaliable with the same slot time. (time slot collison)
+
+
+
+     1           doctor_2       patient_2
+     2           doctor_1       patient_1
+     1           doctor_2       patient_1          (Unwanted-1)
+     1           doctor_1       patient_2          (Unwanted-1)

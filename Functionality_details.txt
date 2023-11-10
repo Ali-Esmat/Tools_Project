@@ -1,0 +1,8 @@
+1- Patient can view all his appointments (GET)
+    Requirements:
+        1- Doctor must be able to add Doctor_Slots to the database
+        2- Patient must be able to add apointments to the database
+    - logical steps:
+        1- When patient has logged in/authenticated, The Contoller asks the repo layer to query the database for all the patient appointments in the Appointments table using the user_id of the patient
+
+        2- results are returned and displayed on the front end.

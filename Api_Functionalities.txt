@@ -1,0 +1,131 @@
+1- Sign in (with django)
+2- Sign up (with django)
+
+3- Doctor can add a Doctor_Slot (POST) ClincApp/Doctor/add
+    - logical steps:
+        1- A logged in doctor clicks add a slot and enters the date and the time
+        2- Controller validates the date and time. (avoid collisons/illogical input) (services.py)
+        3- Controller sends input to repo layer (service.py -> )
+        4- repo layer inserts a new row in Doctor_Slots and uses user_id as the foreign key
+        5- 200 OK is returned on successful insert
+
+4- Patient selects doctor to view his slots (GET)
+    - logical steps:
+        1- A logged in patient selects A DOCTOR NAME FROM A DROP BOX (doctor names must be diplayed)
+        2- On select the Controller recieves the doctor's name and asks repo layer to query the data base for the doctor's id
+        3- Controller recieves id from the database and asks the repo layer to query the Doctor_Slots table for the DOCTOR SLOTS WITH AVALIABLE STATUS
+        4- doctor slots are returned to the contoller and are displayed in the front end
+
+    - Sub functionality for step 1:
+        1- When the patient enters their home page, The controller asks the repo_layer to query the database for user names with type doctor.
+        2- doctor names are returned to the controller and are displayed as the options in the dropbox.
+
+5- Patient chooses a slot fromt the Doctor_Slots table as an appointment (PUT/POST)
+    -logical steps:
+        1- Patient selects a slot (using a checkbox) and clicks reserve
+        2- The slots with marked checkbox are sent back to the controller (maybe their id is returned to controller)
+        3- Controller asks repo layer to update the status of the selected doctor slots in the Doctor_Slots table to RESERVED
+        4- Controller asks repo layer to update by inserting rows into the Appointments table with the user_id of the doctor and the patient and selected slot details.
+        5- 200 OK is returned and on next refresh the user appointments in the front end should be updated
+
+6- Patient can update an appointment by changing the time slot or the doctor (PUT/POST)
+    - logical stpes to update appointment by changing time slot:
+        1- Patient clicks on the edit button of one of his reserved Appointments
+
+        ** Allowing user to select a slot from the doctor's schedule
+        2- Controller recieves info about the appointment to be edited. Controller asks the repo layer to query the database for the user_id of the doctor in the appointment to be edited using the doctor's user_name (recieved in appointment info).
+
+        3- Controller recieves doctor's user_id. Contoller asks the repo layer to query the database for all the Doctor_Slots with status AVALIABLE
+
+        4- Controller recieves the Doctor_Slots and displays them in the front end.
+
+        5- Patient marks a Doctor_Slot (using a checkbox BUT CAN ONLY PICK ONE SLOT IN THIS PART) and clicks reserve.
+
+        6- Contoller recieves info about the Doctor_Slot to be reserved.
+
+        ** Removing the effect of the old appointment
+        7- Contoller asks the repo layer to remove the original appointment to be edited using the info recieved about that appointment in step (2).
+
+        8- Controller asks repo layer to change the slot status (that was representing the appointment to be edited)  in the Doctor_Slots to AVALIABLE.
+
+        ** Adding the effect of the new appointment
+        9- Controller asks repo layer to insert A ROW in the Appointments table with the user_id of the doctor and the patient and the selected slot details.
+
+        10- Contorller asks repo layer to change the slot (that will reperesent the new appointment) in the Doctor_Slots status to RESERVED.
+
+        11- Controller returns 200 OK to the user.
+        ** On refresh: the user should see the updated appointment in My Apointments
+
+    - logical steps to change appointment by changing the doctor:
+        1- Patient clicks on the edit button of one of his reserved Appointments
+
+        ** Allowing user to select a slot from the doctor's schedule
+        2- Controller recieves info about the appointment to be edited. Controller asks the repo layer to query the database for the user_id of the doctor in the appointment to be edited using the doctor's user_name (recieved in appointment info).
+
+        3- Controller recieves doctor's user_id. Contoller asks the repo layer to query the database for all the Doctor_Slots with status AVALIABLE
+
+        4- Controller recieves the Doctor_Slots and displays them in the front end.
+
+        5- Patient opens the drop box and selects a different doctor.
+
+        6- Controller recieves info about the new doctor selected. Controller REPEATS STEPS FROM (1 to 4) AGAIN.
+
+        ** Removing the effect of the old appointment
+        7- Contoller asks the repo layer to remove the original appointment to be edited using the info recieved about that appointment in step (2).
+
+        8- Controller asks repo layer to change the slot status (that was representing the appointment to be edited) in the Doctor_Slots to AVALIABLE.
+
+        ** Adding the effect of the new appointment
+        9- Controller asks repo layer to insert A ROW in the Appointments table with the user_id of the doctor (RECIEVED IN STEP 6) and the patient and the selected slot details.
+
+        10- Contorller asks repo layer to change the slot status (that will reperesent the new appointment) in the Doctor_Slots to RESERVED.
+
+        11- Controller returns 200 OK to the user.
+        ** On refresh: the user should see the updated appointment in My Apointments
+
+
+7- Patient can cancel the appointment entirely (DELETE)
+    - logical steps:
+        1- Logged in user of type Patient clicks on the cancel button (besides one of his appointments) and is asked for confirmation. User chooses yes.
+
+        2- Controller recieves info that one of the appointments cancel button was clicked.
+
+        3- Controller asks repo layer to remove the row in the Apointments table that represents this appointment using doctor and patient ids for filtering.
+
+        4- Controller asks the repo layer to change the slot status (that represented the cancelled appointment) in the Doctor_Slots table to AVALIABLE.
+
+        5- Contoller outputs 200 OK
+
+8- Patient can view all his appointments (GET)
+    - logical steps:
+        1- When patient has logged in/authenticated, The Contoller asks the repo layer to query the database for all the patient appointments in the Appointments table using the user_id of the patient
+
+        2- results are returned and displayed on the front end.
+
+Ambiguities:
+    1- Can any number of doctors have a Doctor_Slot with the same start time and date ?
+    2- Doctor should be able to remove Doctor_Slots
+    3- Should their be coupling between the Doctor and the slots ?
+
+
+implementation flow ideas:
+    1- The top/Views layer:
+        - contains abstract view of the functionality of th apis
+        - serializes JSON objects recieved from requests
+        - sends serialized objects to service layer
+        - deserializes output objects recieved from service layer to JSON response format
+
+    2- The service layer:
+        - recieves serialized python objects from the view
+        - applies bussniess logic/ manipulates the data objects recieved
+        - communicates with the repository layer to obtain further serialized python objects/send objects to be persisted
+
+    3- The repository layer:
+        - recieves data from the service layer then serializes it.
+        - persists/deletes the data in/from the model
+        - returns serialized python objects to the service layer if requested.
+
+    4- Model:
+        - contains the structure of the tables in the databases
+        - can override the default saving functionality if needed at best
+        - MUST NOT BE EXPOSED TO SERVICE/VIEW LAYERS
