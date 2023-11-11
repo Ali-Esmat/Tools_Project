@@ -4,7 +4,7 @@ from ClincApp.repo.user_repository import UserRepository
 def get_all_users():
     user_repository = UserRepository()
     users_serializer = UserRepository.get_all(user_repository)
-    response = list(users_serializer.values())
+    response = list(users_serializer.data)
     return response
 # POST creates a user
 def create_user(request_data):

@@ -8,7 +8,6 @@ class UserRepository:
             users_serializer.save()
             return True
         else:
-            print(users_serializer.errors)
             return False
 
     def get_all_patients(self):
@@ -16,8 +15,17 @@ class UserRepository:
         users_serializer = UsersSerializer(users, many=True)
         return users_serializer
 
+    def get_all_doctors(self):
+        users = Users.objects.get(userType= "doctor")
+        users_serializer = UsersSerializer(users, many=True)
+        return users_serializer
+
     def get_all(self):
-        return Users.objects.all()
+        users = Users.objects.all()
+        users_serializer = UsersSerializer(users, many=True)
+        print("user serializer : {}".format(users_serializer))
+        print("user serializer data: {}".format(users_serializer.data))
+        return users_serializer
 
     def get_user(self,id):
         user_serializer = UsersSerializer(Users.objects.get(user_id =id), many = False)

@@ -10,11 +10,13 @@ from ClincApp.services import user_services
 def UserApi(request):
     # request format: api/user
     # request format: api/user/
+    # GET all users in the database
     if request.method == 'GET':
         response = user_services.get_all_users()
         return JsonResponse(response,safe=False)
     # request format: api/user
     # request format: api/user/
+    # POST a new user into the databases
     elif request.method == 'POST':
         request_data = JSONParser().parse(request)
         if user_services.create_user(request_data):

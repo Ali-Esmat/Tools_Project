@@ -6,3 +6,11 @@
         1- When patient has logged in/authenticated, The Contoller asks the repo layer to query the database for all the patient appointments in the Appointments table using the user_id of the patient
 
         2- results are returned and displayed on the front end.
+Requirement 1:
+- Doctor can add a Doctor_Slot (POST) ClincApp/Doctor/add
+    - logical steps:
+        1- A logged in doctor clicks add a slot and enters the date and the time
+        2- Controller validates the date and time. (avoid collisons/illogical input) (services.py)
+        3- Controller sends input to repo layer (service.py -> )
+        4- repo layer inserts a new row in Doctor_Slots and uses user_id as the foreign key
+        5- 200 OK is returned on successful insert

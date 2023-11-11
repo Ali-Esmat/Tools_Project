@@ -20,7 +20,7 @@
         1- When the patient enters their home page, The controller asks the repo_layer to query the database for user names with type doctor.
         2- doctor names are returned to the controller and are displayed as the options in the dropbox.
 
-5- Patient chooses a slot fromt the Doctor_Slots table as an appointment (PUT/POST)
+5- Patient chooses a slot from the Doctor_Slots table as an appointment (PUT/POST)
     -logical steps:
         1- Patient selects a slot (using a checkbox) and clicks reserve
         2- The slots with marked checkbox are sent back to the controller (maybe their id is returned to controller)
