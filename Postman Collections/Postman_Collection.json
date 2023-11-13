@@ -332,24 +332,6 @@
 				}
 			],
 			"id": "ad98d8c9-3bbe-425d-ad7b-a4e76d8d289d"
-		},
-		{
-			"name": "Authentication",
-			"item": [
-				{
-					"name": "Sign up",
-					"id": "88fc11e5-aa16-4fe1-b829-c7280dddd2e0",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				}
-			],
-			"id": "a2be751b-eb5c-4a50-83fb-735a2e00b3d6"
 		}
 	]
 }
