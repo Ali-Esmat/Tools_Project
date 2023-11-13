@@ -6,11 +6,32 @@
         1- When patient has logged in/authenticated, The Contoller asks the repo layer to query the database for all the patient appointments in the Appointments table using the user_id of the patient
 
         2- results are returned and displayed on the front end.
-Requirement 1:
-- Doctor can add a Doctor_Slot (POST) ClincApp/Doctor/add
+Requirements :
+1- Doctor can add a Doctor_Slot (POST) ClincApp/Doctor/add (DONE)
     - logical steps:
         1- A logged in doctor clicks add a slot and enters the date and the time
         2- Controller validates the date and time. (avoid collisons/illogical input) (services.py)
         3- Controller sends input to repo layer (service.py -> )
         4- repo layer inserts a new row in Doctor_Slots and uses user_id as the foreign key
         5- 200 OK is returned on successful insert
+
+2- Patient must be able to add apointments to the database
+
+    2.1- Patient selects doctor to view his slots (GET)
+        - logical steps:
+            1- A logged in patient selects A DOCTOR NAME FROM A DROP BOX (doctor names must be displayed)
+            2- On select the Controller recieves the doctor's name and asks repo layer to query the data base for the doctor's id
+            3- Controller recieves id from the database and asks the repo layer to query the Doctor_Slots table for the DOCTOR SLOTS WITH AVALIABLE STATUS
+            4- doctor slots are returned to the contoller and are displayed in the front end
+
+        - Sub functionality for step 1:
+            1- When the patient enters their home page, The controller asks the repo_layer to query the database for user names with type doctor.
+            2- doctor names are returned to the controller and are displayed as the options in the dropbox.
+
+5- Patient chooses a slot from the Doctor_Slots table as an appointment (PUT/POST)
+    -logical steps:
+        1- Patient selects a slot (using a checkbox) and clicks reserve
+        2- The slots with marked checkbox are sent back to the controller (maybe their id is returned to controller)
+        3- Controller asks repo layer to update the status of the selected doctor slots in the Doctor_Slots table to RESERVED
+        4- Controller asks repo layer to update by inserting rows into the Appointments table with the user_id of the doctor and the patient and selected slot details.
+        5- 200 OK is returned and on next refresh the user appointments in the front end should be updated

@@ -47,3 +47,10 @@ def DoctorSlotsWithParamterApi(request, id):
     elif request.method == 'DELETE':
         slot_services.delete_a_slot_by_slot_id(id)
         return JsonResponse("Deleted the slot successfully", safe=False)
+
+@csrf_exempt
+def DoctorSlotsPatientViewWithParamterApi(request, id):
+        if request.method == 'GET':
+            doctor_id = id
+            response = slot_services.get_all_slots_for_a_doctor_Patient_view(doctor_id)
+            return JsonResponse(response,safe=False)

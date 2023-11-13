@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authentication',
     'corsheaders',
     'ClincApp.apps.ClincappConfig'
 ]
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 

@@ -1,0 +1,19 @@
+- Patient selects doctor to view his slots (GET)
+    - Doctor names should be displayable from the appointment service (by asking the user service)
+    - All slots of a specifc doctor should also displayable from the appointment service (by asking the slot service)
+- Patient chooses a slot from the Doctor_Slots table as an appointment (PUT/POST):
+    - Create a slot:
+        - no appointment id yet
+        - uses the slot's date, start time, and doctor name in the request body to choose the slot (unique)
+
+    - Update a slot:
+        - uses the appointment id in the parameter
+        - uses the slot's date, time, doctor name in the request body to choos the new slot
+
+
+    it is important to:
+        - get all doctor names by id from the database (Done)
+            - get a specifc doctor name by id (Done)
+            - get all doctor names (Done)
+        - get a doctor's id by name from the users controller (Done)
+        - get the slot_id by it's date and start time and doctor name (Done)

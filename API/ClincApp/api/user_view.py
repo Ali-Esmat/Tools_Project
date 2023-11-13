@@ -45,6 +45,23 @@ def UserWithParamterApi(request, user_id):
         user_services.delete_user(user_id)
         return JsonResponse("Deleted Successfully", safe=False)
 
+@csrf_exempt
+def DoctorApi(request):
+    # request format: api/doctor
+    # request format: api/doctor/
+    # GET all users in the database
+    if request.method == 'GET':
+        response = user_services.get_all_doctors()
+        return JsonResponse(response,safe=False)
+@csrf_exempt
+def PatientApi(request, user_name):
+    # request format: api/patient/<user_name>/
+    # Get a user by name from the database
+    if request.method == 'GET':
+        response = user_services.get_user_id_by_name(user_name)
+        return JsonResponse(response,safe=False)
+
+
 # Get All users
 # Create a user
 # Get A user by ID
