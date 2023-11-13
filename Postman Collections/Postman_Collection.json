@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "cf3940a4-b859-4605-8280-97af9ced0700",
+		"name": "Tools-3-Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User_model_Requests",
+			"item": [
+				{
+					"name": "Get All Users",
+					"id": "d49d62f1-b735-4a73-a232-6bd4c29ac032",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://127.0.0.1:8000/api/user/"
+					},
+					"response": []
+				}
+			],
+			"id": "da5d9914-17bf-4a2e-bbb5-33558e926aea"
+		},
+		{
+			"name": "Doctor_slots_model_Requests",
+			"item": [
+				{
+					"name": "Make Doctor Slots",
+					"id": "60e77d04-685b-4eeb-b52a-5618ad8ab647",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2023-11-09\",\r\n    \"start_hour\": \"14:30:00\",\r\n    \"doctor_id\": \"\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
+						},
+						"url": "http://127.0.0.1:8000/api/doctor_slots/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor Slots",
+					"id": "224c88e4-87f1-4a52-89eb-04f882fdb577",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/api/doctor_slots/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Slot id by Slot details",
+					"id": "00de1ac4-d7c7-45be-830b-58be7b5bc31c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"date\":\"2023-11-09\",\"start_hour\":\"15:00:00\",\"doctor_name\":\"Dr. Khaled\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/doctor_slots/"
+					},
+					"response": []
+				}
+			],
+			"id": "fbafdd2b-d44b-4362-9af2-b58b4b37e579"
+		},
+		{
+			"name": "Appointment Model Requests",
+			"item": [
+				{
+					"name": "Get All Appointments",
+					"id": "92f32cc0-7d71-4d09-b674-14055d774fb4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/api/appointments/"
+					},
+					"response": []
+				},
+				{
+					"name": "Make Appointment",
+					"id": "76bda7cc-a1ce-496f-9fe9-4e4cb4969b0a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"slot_id\":\"5\",\r\n    \"patient_id\":\"3\"\r\n}"
+						},
+						"url": "http://127.0.0.1:8000/api/appointments/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient Appointments",
+					"id": "831e8851-a04d-4144-9052-d62ed6e9d145",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/api/appointments/7/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment",
+					"id": "d366ab43-ff15-475c-baa9-40368b170e8c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:8000/api/appointments/1/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"id": "ae47edbe-74b9-481e-9638-d3c5c01e8f4b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"slot_id\":\"6\",\r\n    \"patient_id\":\"7\"\r\n}"
+						},
+						"url": "http://127.0.0.1:8000/api/appointments/19/"
+					},
+					"response": []
+				}
+			],
+			"id": "f8a18a19-899e-4f8c-92da-824d2156d44d"
+		},
+		{
+			"name": "Required Functionalities",
+			"item": [
+				{
+					"name": "Doctor sets his schedule",
+					"item": [
+						{
+							"name": "Doctor adds a doctor slot",
+							"id": "4703e1b2-c13b-4b7d-ba72-8b104d750722",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"date\": \"2023-12-01\",\r\n    \"start_hour\": \"12:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
+								},
+								"url": "http://127.0.0.1:8000/api/doctor_slots/"
+							},
+							"response": []
+						},
+						{
+							"name": "Doctor gets his current slots",
+							"id": "8b1f5059-9c5c-4b6f-8018-e5e3bec355ac",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/doctor_slots/2"
+							},
+							"response": []
+						},
+						{
+							"name": "Doctor updates a slot",
+							"id": "73f25652-f2c1-485a-8b59-f86d274dea3a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"date\": \"2023-12-02\",\r\n    \"start_hour\": \"13:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
+								},
+								"url": "http://127.0.0.1:8000/api/doctor_slots/8/"
+							},
+							"response": []
+						},
+						{
+							"name": "Doctor deletes a slot",
+							"id": "9c4cb8c9-acf3-449a-8e8c-434019699a58",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/doctor_slots/8/"
+							},
+							"response": []
+						}
+					],
+					"id": "02e9dcb8-66af-4bcb-b414-12203142116a"
+				},
+				{
+					"name": "Patient",
+					"item": [
+						{
+							"name": "Get all doctor ids",
+							"id": "6ad3a008-210c-4e38-a989-a1769bd873e9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/doctor/"
+							},
+							"response": []
+						},
+						{
+							"name": "Get a user appointments",
+							"id": "466e04cf-4de7-4666-9cbc-6807e68c1c51",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/appointments/7/"
+							},
+							"response": []
+						},
+						{
+							"name": "Get a doctor's avaliable slots",
+							"id": "28f6fad8-60ce-4ba4-9f77-3a7146c72685",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/doctor_slots/user_view/6"
+							},
+							"response": []
+						},
+						{
+							"name": "User creates an appointment",
+							"id": "6ccf2616-5a1d-4efd-9cd3-87c72bd6b368",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"slot_id\":\"5\",\r\n    \"patient_id\":\"3\"\r\n}"
+								},
+								"url": "http://127.0.0.1:8000/api/appointments/"
+							},
+							"response": []
+						},
+						{
+							"name": "User updates an appointment",
+							"id": "82ab7fb2-ecf4-40ca-af7a-8c1493968e07",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/appointments/19/"
+							},
+							"response": []
+						},
+						{
+							"name": "User deletes an appointment",
+							"id": "bb310fba-bf90-42d6-8e44-a36a179b800f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/appointments/1/"
+							},
+							"response": []
+						},
+						{
+							"name": "Patient Gets his own details",
+							"id": "dfe5a6f4-2de9-48e5-8dc5-0056755064d3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/api/patient/L/"
+							},
+							"response": []
+						}
+					],
+					"id": "477b070a-12cf-4c2e-8b09-4c1afcc79e16"
+				}
+			],
+			"id": "ad98d8c9-3bbe-425d-ad7b-a4e76d8d289d"
+		}
+	]
+}
