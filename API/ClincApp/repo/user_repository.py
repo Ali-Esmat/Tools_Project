@@ -54,11 +54,11 @@ class UserRepository:
         return user_qs[0]
 
     def get_all_patients(self):
-        users_qs = Users.objects.filter(user_role= "patient").values_list('user_name', flat=True)
+        users_qs = Users.objects.filter(user_type= "patient").values_list('user_name', flat=True)
         return list(users_qs)
 
     def get_all_doctors(self):
-        doctors_qs = Users.objects.filter(user_role= "doctor").values_list('user_id','user_name')
+        doctors_qs = Users.objects.filter(user_type= "doctor").values_list('user_id','user_name')
         #doctors = list(itertools.chain(*doctors_qs))
         #doctors = UsersSerializer(doctors_qs, many = True)
         return list(doctors_qs)

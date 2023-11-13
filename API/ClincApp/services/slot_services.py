@@ -134,7 +134,7 @@ def update_slot_status(status, slot_id):
  # Delete a slot by slot id
 def delete_a_slot_by_slot_id(slot_id):
     doctor_slots_repository = DoctorSlotsRepository()
-    doctor_slots_repository.delete_a_slot_by_slot_id(slot_id)
+    return doctor_slots_repository.delete_a_slot_by_slot_id(slot_id)
 
 
 # non path related functions

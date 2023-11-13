@@ -13,13 +13,21 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
+    re_path('login', auth_views.login),
+    re_path('signup', auth_views.signup),
+    re_path('test_token', auth_views.test_token),
+    super user password : ali
 """
 from django.contrib import admin
+from ClincApp.api import auth_views
 from django.urls import path
-
+from django.views.generic import TemplateView
 from django.urls import re_path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'api/', include('ClincApp.urls')),
+    path('api-token-auth', auth_views.obtain_auth_token),
+    path('test-front-end', TemplateView.as_view(template_name = "index.html"))
 ]

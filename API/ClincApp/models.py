@@ -1,13 +1,11 @@
 from django.db import models
-
 # Create your models here.
-
 class Users(models.Model):
 
     user_id = models.AutoField(primary_key=True)
-    user_name = models.CharField(max_length=500, unique=True)
+    user_name = models.CharField(max_length=500, default= "", unique=True)
     password = models.CharField(max_length=500)
-    user_role = models.CharField(max_length=500)
+    user_type = models.CharField(max_length=500)
 
 class DoctorSlots(models.Model):
     slot_id = models.AutoField(primary_key=True)

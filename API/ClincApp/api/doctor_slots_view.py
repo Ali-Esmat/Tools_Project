@@ -45,8 +45,10 @@ def DoctorSlotsWithParamterApi(request, id):
     # request format: api/doctor_slots/<id>/
     # Delete a slot by slot id
     elif request.method == 'DELETE':
-        slot_services.delete_a_slot_by_slot_id(id)
-        return JsonResponse("Deleted the slot successfully", safe=False)
+        if slot_services.delete_a_slot_by_slot_id(id):
+            return JsonResponse("Deleted the slot successfully", safe=False)
+        else:
+            return JsonResponse("Failed to delete the slot, it does not exist", safe= False)
 
 @csrf_exempt
 def DoctorSlotsPatientViewWithParamterApi(request, id):

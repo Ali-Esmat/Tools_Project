@@ -48,16 +48,23 @@ class DoctorSlotsRepository:
             return False
 
     def delete_a_slot_by_slot_id(self, id):
-        slot = DoctorSlots.objects.get(slot_id=id)
-        slot.delete()
+        try:
+            slot = DoctorSlots.objects.get(slot_id=id)
+            slot.delete()
+            return True
+        except DoctorSlots.DoesNotExist:
+            return False
 
     def update_slot_details_by_slot_id(self, slot_data, id):
-        slot = DoctorSlots.objects.get(slot_id = id)
-        slot_serializer = DoctorSlotsSerializer(slot, data=slot_data)
-        if slot_serializer.is_valid():
-            slot_serializer.save()
-            return True
-        else:
+        try:
+            slot = DoctorSlots.objects.get(slot_id = id)
+            slot_serializer = DoctorSlotsSerializer(slot, data=slot_data)
+            if slot_serializer.is_valid():
+                slot_serializer.save()
+                return True
+            else:
+                return False
+        except DoctorSlots.DoesNotExist:
             return False
 
     def get_a_slot_by_slot_id(self,id):
