@@ -323,7 +323,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "http://127.0.0.1:8000/api/patient/L/"
+								"url": "http://127.0.0.1:8000/api/patient/Adham/"
 							},
 							"response": []
 						}
