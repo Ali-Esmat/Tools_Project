@@ -177,7 +177,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"date\": \"2023-12-01\",\r\n    \"start_hour\": \"12:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
+									"raw": "{\r\n    \"date\": \"2023-12-02\",\r\n    \"start_hour\": \"12:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
 								},
 								"url": "http://127.0.0.1:8000/api/doctor_slots/"
 							},
@@ -207,7 +207,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"date\": \"2023-12-02\",\r\n    \"start_hour\": \"13:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
+									"raw": "{\r\n    \"date\": \"2023-12-01\",\r\n    \"start_hour\": \"13:00:00\",\r\n    \"doctor\": \"2\",\r\n    \"status\": \"AVALIABLE\"\r\n}"
 								},
 								"url": "http://127.0.0.1:8000/api/doctor_slots/8/"
 							},
@@ -254,7 +254,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "http://127.0.0.1:8000/api/appointments/7/"
+								"url": "http://127.0.0.1:8000/api/appointments/3/"
 							},
 							"response": []
 						},
@@ -282,7 +282,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \r\n    \"slot_id\":\"5\",\r\n    \"patient_id\":\"3\"\r\n}"
+									"raw": "{ \r\n    \"slot_id\":\"9\",\r\n    \"patient_id\":\"3\"\r\n}"
 								},
 								"url": "http://127.0.0.1:8000/api/appointments/"
 							},
@@ -297,7 +297,11 @@
 							"request": {
 								"method": "PUT",
 								"header": [],
-								"url": "http://127.0.0.1:8000/api/appointments/19/"
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"slot_id\":\"6\",\r\n    \"patient_id\":\"3\"\r\n}"
+								},
+								"url": "http://127.0.0.1:8000/api/appointments/21/"
 							},
 							"response": []
 						},
@@ -310,7 +314,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "http://127.0.0.1:8000/api/appointments/1/"
+								"url": "http://127.0.0.1:8000/api/appointments/21/"
 							},
 							"response": []
 						},
