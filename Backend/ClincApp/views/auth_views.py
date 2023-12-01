@@ -2,11 +2,9 @@ from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from ClincApp.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from ClincApp.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UsersSerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_password, validate_user_name
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 
 
 
@@ -37,7 +35,7 @@ class UserLogin(APIView):
 		if serializer.is_valid(raise_exception=True):
 			user = serializer.check_user(data)
 			login(request, user)
-			serializer = UserSerializer(user)
+			serializer = UsersSerializer(user)
 			return Response(serializer.data, status=status.HTTP_200_OK)
 
 

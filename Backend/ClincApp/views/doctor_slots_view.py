@@ -1,16 +1,18 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 from ClincApp.services import slot_services
-from ClincApp.permissions import DoctorPermission
-
+from ClincApp.permissions import DoctorPermission, PatientPermission
 
 @csrf_exempt
 def DoctorSlotsApi(request):
     # request format: api/doctor_slots
     # request format: api/doctor_slots/
     # Get all slots in the database
+    permission_classes = (IsAuthenticated, DoctorPermission|PatientPermission)
     if request.method == 'GET':
         response = slot_services.get_all_slots()
         return JsonResponse(response,safe=False)
@@ -20,9 +22,11 @@ def DoctorSlotsApi(request):
     elif request.method == 'POST':
         request_data = JSONParser().parse(request)
         if slot_services.create_doctor_slot(request_data):
-            return JsonResponse("Added successfully", safe=False)
+            #return Response(status=status.HTTP_201_CREATED)
+            return JsonResponse("Added successfully", status=status.HTTP_201_CREATED, safe=False)
         else:
-            return JsonResponse("Failed to add the slot", safe=False)
+            #return Response(status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse("Failed to add the slot", status=status.HTTP_400_BAD_REQUEST, safe=False)
 
 @csrf_exempt
 def DoctorSlotsWithParamterApi(request, id):

@@ -17,9 +17,12 @@ const client = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
+
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState();
   const [registrationToggle, setRegistrationToggle] = useState(false);
+  const [user_id, setUserId] = useState("");
   const [user_name, setUserName] = useState("");
   const [user_type, setUserType] = useState("");
   const [password, setPassword] = useState("");
@@ -80,6 +83,10 @@ const App = () => {
             password: password,
           })
           .then(function (res) {
+            setUserId(res.data['user_id'])
+            setUserName(res.data['user_name'])
+            setPassword(res.data['password'])
+            setUserType(res.data['user_type'])
             setCurrentUser(true);
           });
       });
@@ -98,6 +105,9 @@ const App = () => {
       })
       .then(function (res) {
         console.log(res.data)
+        setUserId(res.data['user_id'])
+        setUserName(res.data['user_name'])
+        setPassword(res.data['password'])
         setUserType(res.data['user_type'])
         setCurrentUser(true);
       });
@@ -135,7 +145,7 @@ const App = () => {
         <div className="center">
           <h2>You're logged in!</h2>
         </div>
-        <Doctor />
+        <Doctor user_id={user_id}/>
       </div>
     );
     }
