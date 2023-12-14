@@ -1,0 +1,1 @@
+docker run --name backend --env-file ./Backend/.env -p 8000:8000 --network=mynetwork -d backend:latest

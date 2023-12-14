@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
   const client = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: process.env.REACT_APP_BE_URL,
   });
 
   const getAppointmentsUrl = (user_id) => {

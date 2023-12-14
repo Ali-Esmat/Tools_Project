@@ -14,12 +14,13 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: process.env.REACT_APP_BE_URL,
 });
 
 
 
 const App = () => {
+  console.log("BE_URL = " + process.env.REACT_APP_BE_URL);
   const [currentUser, setCurrentUser] = useState();
   const [registrationToggle, setRegistrationToggle] = useState(false);
   const [user_id, setUserId] = useState("");

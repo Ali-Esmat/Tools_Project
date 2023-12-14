@@ -3,7 +3,6 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'API.settings')
@@ -19,4 +18,6 @@ def main():
 
 
 if __name__ == '__main__':
+    print("DB_PORT = {}".format(os.environ.get('PGPORT')))
+    print("DB_HOST = {}".format(os.environ.get('DB_HOST')))
     main()
