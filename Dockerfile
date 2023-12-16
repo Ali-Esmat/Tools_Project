@@ -6,5 +6,5 @@ ENV POSTGRES_PASSWORD database
 
 # Customize the permission settings
 USER root
-RUN chmod -R  777 /var/run/postgresql /var/lib/postgresql
+RUN chmod -R 777 /var/run/postgresql && chmod -R 777 /var/lib/postgresql
 USER postgres
