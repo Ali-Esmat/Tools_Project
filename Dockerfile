@@ -11,6 +11,6 @@ RUN mkdir -p /var/run/postgresql && chown -R postgres:postgres /var/run/postgres
 USER postgres
 
 # Set environment variables
-ENV POSTGRES_DB Clinc
+ENV POSTGRES_DB clinc
 ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWORD database
