@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'API.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clinc',
+        'NAME': 'Clinc',
         'USER': 'postgres',
         'PASSWORD': 'database',
         'HOST': os.environ.get('DB_HOST'),
