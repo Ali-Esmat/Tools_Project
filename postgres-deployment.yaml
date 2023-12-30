@@ -1,0 +1,25 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: mydatabase
+spec:
+  replicas: 1
+  selector:
+    app: mydatabase
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: mydatabase
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:15
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: database
+        - name: POSTGRES_DATABASE
+          value: Clinc
