@@ -4,8 +4,8 @@ FROM postgres
 USER root
 
 # Create directories with correct permissions and ownership
-RUN mkdir -p /var/run/postgresql && chown -R postgres:postgres /var/run/postgresql \
-    && mkdir -p /var/lib/postgresql && chown -R postgres:postgres /var/lib/postgresql
+RUN mkdir -p /var/run/postgresql && chown -R postgres:postgres /var/run/postgresql && chmod 777 /var/run/postgresql \
+    && mkdir -p /var/lib/postgresql && chown -R postgres:postgres /var/lib/postgresql && chmod 777 /var/lib/postgresql
 
 # Switch back to the postgres user
 USER postgres
