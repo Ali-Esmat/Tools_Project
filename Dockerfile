@@ -1,6 +1,6 @@
 FROM postgres
 
-# Customize the permission settings
+# Switch to root to perform tasks
 USER root
 
 # Create directories with correct permissions and ownership
